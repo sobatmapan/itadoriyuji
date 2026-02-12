@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Scriblerian University — News, Academics, Campus Information</title>
+  <meta name="description" content="Scriblerian University portal: berita kampus, pengumuman, akademik, riset, kegiatan mahasiswa, dan layanan." />
+  <link rel="canonical" href="https://scriblerian.net/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Source+Serif+4:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#0b0f14;
+      --muted:#475569;
+      --line:#e5e7eb;
+
+      --red:#b91c1c;
+      --green:#15803d;
+      --red2:#ef4444;
+      --green2:#22c55e;
+
+      --radius:10px;  /* kecil */
+      --shadow: 0 14px 38px rgba(2,6,23,.10);
+      --shadow2: 0 10px 26px rgba(2,6,23,.08);
+
+      --serif:"Source Serif 4", ui-serif, Georgia, serif;
+      --sans:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 520px at 12% -10%, rgba(239,68,68,.10), transparent 60%),
+        radial-gradient(900px 520px at 92% 0%, rgba(34,197,94,.10), transparent 60%),
+        var(--bg);
+    }
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; text-underline-offset:4px; }
+
+    .container{ max-width:1120px; margin:0 auto; padding:0 18px; }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+
+    /* Top utility bar */
+    .utility{
+      background:#0b0f14;
+      color:rgba(255,255,255,.88);
+      font-size:12px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .utility .row{
+      display:flex; gap:14px; justify-content:space-between; align-items:center;
+      padding:10px 0;
+    }
+    .utility .links{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+      color:rgba(255,255,255,.80);
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .utility .links a{ opacity:.92; }
+    .utility .links a:hover{ opacity:1; text-decoration:underline; }
+    .utility .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      font-weight:800;
+      letter-spacing:.25px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:linear-gradient(135deg,var(--red2),var(--green2));
+    }
+
+    /* Header */
+    header{
+      position:sticky;
+      top:0;
+      z-index:60;
+      background:rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .head{
+      display:flex; gap:16px;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex; gap:12px; align-items:center; min-width:260px;
+    }
+    .mark{
+      width:42px; height:42px;
+      border-radius:10px; /* kecil */
+      background:linear-gradient(135deg,var(--red),var(--green));
+      box-shadow: 0 10px 26px rgba(185,28,28,.14);
+      display:grid; place-items:center;
+      color:#fff;
+      font-weight:1000;
+      letter-spacing:.4px;
+      user-select:none;
+    }
+    .brand h1{
+      margin:0;
+      font-family:var(--serif);
+      font-size:18px;
+      letter-spacing:.2px;
+      line-height:1.1;
+    }
+    .brand p{
+      margin:2px 0 0;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    nav a{
+      font-weight:800;
+      font-size:13px;
+      color:#0b0f14;
+      padding:9px 10px;
+      border:1px solid var(--line);
+      border-radius:10px; /* kecil */
+      background:#fff;
+    }
+    nav a:hover{ background:#f8fafc; text-decoration:none; }
+    .menu-btn{
+      display:none;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:10px;
+      padding:9px 10px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    @media (max-width: 920px){
+      nav{ display:none; }
+      .menu-btn{ display:inline-flex; align-items:center; gap:8px; }
+    }
+
+    /* Mobile nav */
+    .mobile-nav{
+      display:none;
+      border-top:1px solid var(--line);
+      background:#fff;
+    }
+    .mobile-nav .inner{
+      padding:12px 0;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+    }
+    .mobile-nav a{
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:10px 12px;
+      font-weight:900;
+      background:#fff;
+    }
+
+    /* Hero */
+    .hero{
+      padding:26px 0 18px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns:1fr; }
+    }
+    .panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panel .phead{
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .title{
+      font-family:var(--serif);
+      font-size:28px;
+      font-weight:900;
+      margin:0;
+      letter-spacing:.2px;
+      line-height:1.1;
+    }
+    .subtitle{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      max-width:72ch;
+      font-weight:600;
+    }
+    .cta-row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px;
+      border-radius:10px; /* kecil */
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+    }
+    .btn.primary{
+      color:#fff;
+      border-color:transparent;
+      background:linear-gradient(135deg,var(--red),var(--green));
+      box-shadow: 0 12px 24px rgba(21,128,61,.14);
+    }
+    .btn.primary:hover{ text-decoration:none; filter:brightness(1.02); }
+    .btn:hover{ text-decoration:none; background:#f8fafc; }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      font-weight:900;
+      font-size:12px;
+      color:#0b0f14;
+    }
+    .pill .mini{
+      width:10px;height:10px;border-radius:999px;
+      background:linear-gradient(135deg,var(--red2),var(--green2));
+    }
+
+    .hero-body{ padding:16px; }
+    .hero-art{
+      padding:0;
+      display:grid;
+      grid-template-rows:auto 1fr;
+    }
+    .art-wrap{
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .art-wrap h2{
+      margin:0;
+      font-size:14px;
+      font-weight:1000;
+      letter-spacing:.2px;
+    }
+    .mini-tag{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#0b0f14;
+    }
+    .art-svg{
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* Sections */
+    section{ padding:14px 0; }
+    .grid-3{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 980px){ .grid-3{ grid-template-columns:1fr; } }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .card .chead{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .card .chead h3{
+      margin:0;
+      font-size:14px;
+      font-weight:1000;
+      letter-spacing:.15px;
+    }
+    .card .cbody{ padding:12px 14px; }
+    .muted{ color:var(--muted); }
+    .small{ font-size:12.5px; line-height:1.65; }
+    .kpi{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .kpi .box{
+      flex:1 1 140px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:10px;
+      background:#fff;
+    }
+    .kpi .num{
+      font-weight:1000;
+      font-size:18px;
+      letter-spacing:.2px;
+      margin:0;
+    }
+    .kpi .lab{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    /* News list */
+    .news{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    @media (max-width: 980px){ .news{ grid-template-columns:1fr; } }
+
+    .news-item{
+      display:grid;
+      grid-template-columns: 110px 1fr;
+      gap:12px;
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      align-items:center;
+    }
+    .news-item:last-child{ border-bottom:none; }
+    .thumb{
+      width:110px; height:72px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:
+        linear-gradient(135deg, rgba(185,28,28,.12), rgba(21,128,61,.12)),
+        #fff;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+    }
+    .news-title{
+      margin:0;
+      font-weight:1000;
+      letter-spacing:.1px;
+      font-size:14px;
+      line-height:1.35;
+    }
+    .meta{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
+    /* Table */
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:13px;
+    }
+    th, td{
+      border-bottom:1px solid var(--line);
+      padding:10px 10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:#111827;
+      background: #f8fafc;
+      border-top:1px solid var(--line);
+    }
+
+    /* Footer */
+    footer{
+      margin-top:18px;
+      border-top:1px solid var(--line);
+      background:#0b0f14;
+      color:rgba(255,255,255,.86);
+    }
+    .foot{
+      padding:22px 0;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){ .foot{ grid-template-columns:1fr; } }
+    .foot h4{
+      margin:0 0 10px;
+      font-weight:1000;
+      letter-spacing:.2px;
+    }
+    .foot p{ margin:0; color:rgba(255,255,255,.72); line-height:1.7; font-size:13px; }
+    .foot a{ color:rgba(255,255,255,.86); font-weight:900; }
+    .foot a:hover{ text-decoration:underline; }
+    .copyright{
+      border-top:1px solid rgba(255,255,255,.12);
+      padding:12px 0;
+      font-size:12px;
+      color:rgba(255,255,255,.62);
+      text-align:center;
+    }
+    /* Reference link list (for <ul class="ref-links">) */
+.ref-links{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:10px;
+}
+
+@media (min-width: 640px){
+  .ref-links{ grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 980px){
+  .ref-links{ grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.ref-links li{ margin:0; padding:0; }
+
+.ref-links a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius: 10px;      /* kecil */
+  background:#fff;
+
+  font-weight:900;
+  font-size:13px;
+  letter-spacing:.15px;
+  color: var(--ink);
+  text-decoration:none;
+  box-shadow: var(--shadow2);
+}
+
+.ref-links a::after{
+  content:"↗";
+  font-weight:1000;
+  color: rgba(11,15,20,.45);
+}
+
+/* Accent line subtle (red->green) */
+.ref-links a{
+  position:relative;
+  overflow:hidden;
+}
+.ref-links a::before{
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:4px;
+  background: linear-gradient(180deg, var(--red), var(--green));
+  opacity:.95;
+}
+
+.ref-links a:hover{
+  background:#f8fafc;
+  border-color:#d1d5db;
+  text-decoration:none;
+}
+
+  </style>
+
+  <script>
+    function toggleMenu(){
+      const m = document.getElementById('mobileNav');
+      const isOpen = m.style.display === 'block';
+      m.style.display = isOpen ? 'none' : 'block';
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Utility bar -->
+  <div class="utility">
+    <div class="container">
+      <div class="row">
+        <div class="links">
+          <span class="badge"><span class="dot"></span> Portal Resmi</span>
+          <a href="#news">Berita</a>
+          <a href="#academics">Akademik</a>
+          <a href="#admissions">Penerimaan</a>
+          <a href="#research">Riset</a>
+        </div>
+        <div class="links">
+          <span>Hotline: +62 000-0000</span>
+          <span>•</span>
+          <span>help@scriblerian.net</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main header -->
+  <header>
+    <div class="container">
+      <div class="head">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">S</div>
+          <div>
+            <h1>Scriblerian University</h1>
+            <p>News • Academics • Campus Services</p>
+          </div>
+        </div>
+
+        <button class="menu-btn" type="button" onclick="toggleMenu()" aria-controls="mobileNav" aria-expanded="false">
+          ☰ Menu
+        </button>
+
+        <nav aria-label="Primary">
+          <a href="#news">Berita</a>
+          <a href="#announcements">Pengumuman</a>
+          <a href="#academics">Akademik</a>
+          <a href="#research">Riset</a>
+          <a href="#students">Mahasiswa</a>
+          <a href="#contact">Kontak</a>
+        </nav>
+      </div>
+
+      <div id="mobileNav" class="mobile-nav" role="region" aria-label="Mobile navigation">
+        <div class="inner">
+          <a href="#news" onclick="toggleMenu()">Berita</a>
+          <a href="#announcements" onclick="toggleMenu()">Pengumuman</a>
+          <a href="#academics" onclick="toggleMenu()">Akademik</a>
+          <a href="#research" onclick="toggleMenu()">Riset</a>
+          <a href="#students" onclick="toggleMenu()">Mahasiswa</a>
+          <a href="#contact" onclick="toggleMenu()">Kontak</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="panel">
+          <div class="phead">
+            <div class="pill"><span class="mini"></span> Update Kampus • Semester Ini</div>
+            <div class="mini-tag">Scriblerian.net</div>
+          </div>
+          <div class="hero-body">
+            <h2 class="title">Portal Informasi Kampus yang Cepat, Jelas, dan Profesional</h2>
+            <p class="subtitle">
+              Akses berita kampus, pengumuman akademik, agenda kegiatan, serta ringkasan program studi.
+              Tata letak dibuat minimalis dengan aksen merah–hijau untuk highlight informasi penting.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn primary" href="#admissions">Pendaftaran</a>
+              <a class="btn" href="#news">Baca Berita</a>
+              <a class="btn" href="#academics">Program Studi</a>
+            </div>
+
+            <div class="kpi">
+              <div class="box">
+                <p class="num">32+</p>
+                <p class="lab">Program & Konsentrasi</p>
+              </div>
+              <div class="box">
+                <p class="num">120+</p>
+                <p class="lab">Agenda / Tahun</p>
+              </div>
+              <div class="box">
+                <p class="num">15</p>
+                <p class="lab">Pusat Riset</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel hero-art">
+          <div class="art-wrap">
+            <h2>Campus Snapshot</h2>
+            <span class="mini-tag">SVG</span>
+          </div>
+          <div class="art-svg" aria-label="Ilustrasi kampus">
+            <!-- Inline SVG: modern, red/green gradient -->
+            <svg width="100%" viewBox="0 0 520 320" role="img" aria-label="Ilustrasi gedung kampus">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#b91c1c" stop-opacity="0.95"/>
+                  <stop offset="1" stop-color="#15803d" stop-opacity="0.95"/>
+                </linearGradient>
+                <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0" stop-color="#ef4444" stop-opacity="0.22"/>
+                  <stop offset="1" stop-color="#22c55e" stop-opacity="0.20"/>
+                </linearGradient>
+              </defs>
+
+              <rect x="18" y="22" width="484" height="276" rx="14" fill="#ffffff" stroke="#e5e7eb"/>
+              <rect x="44" y="48" width="432" height="54" rx="10" fill="url(#g2)" />
+              <rect x="44" y="118" width="280" height="18" rx="8" fill="#0b0f14" opacity="0.12"/>
+              <rect x="44" y="146" width="360" height="14" rx="7" fill="#0b0f14" opacity="0.10"/>
+              <rect x="44" y="168" width="330" height="14" rx="7" fill="#0b0f14" opacity="0.10"/>
+
+              <!-- Building -->
+              <g transform="translate(72,192)">
+                <rect x="0" y="30" width="376" height="70" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+                <rect x="30" y="0" width="316" height="40" rx="10" fill="url(#g1)" opacity="0.95"/>
+                <rect x="50" y="44" width="52" height="44" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+                <rect x="114" y="44" width="52" height="44" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+                <rect x="178" y="44" width="52" height="44" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+                <rect x="242" y="44" width="52" height="44" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+                <rect x="306" y="44" width="40" height="44" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+              </g>
+
+              <!-- Accent pins -->
+              <circle cx="452" cy="78" r="9" fill="#b91c1c" opacity="0.9"/>
+              <circle cx="476" cy="78" r="9" fill="#15803d" opacity="0.9"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- News + Sidebar -->
+  <section id="news">
+    <div class="container">
+      <div class="news">
+        <div class="card">
+          <div class="chead">
+            <h3>Berita Terbaru</h3>
+            <span class="mini-tag">Update</span>
+          </div>
+
+          <div class="news-item">
+            <div class="thumb" aria-hidden="true">
+              <!-- mini svg -->
+              <svg viewBox="0 0 120 72" width="100%" height="100%">
+                <rect x="8" y="10" width="104" height="52" rx="10" fill="rgba(185,28,28,.12)"/>
+                <rect x="14" y="18" width="64" height="10" rx="5" fill="rgba(11,15,20,.18)"/>
+                <rect x="14" y="34" width="92" height="8" rx="4" fill="rgba(11,15,20,.12)"/>
+                <rect x="14" y="46" width="78" height="8" rx="4" fill="rgba(11,15,20,.10)"/>
+                <circle cx="102" cy="20" r="6" fill="rgba(34,197,94,.45)"/>
+              </svg>
+            </div>
+            <div>
+              <p class="news-title">Pembukaan Program Magang Industri: Batch Semester Ini</p>
+              <div class="meta"><span>Campus News</span><span>•</span><span>2 jam lalu</span></div>
+            </div>
+          </div>
+
+          <div class="news-item">
+            <div class="thumb" aria-hidden="true">
+              <svg viewBox="0 0 120 72" width="100%" height="100%">
+                <rect x="8" y="10" width="104" height="52" rx="10" fill="rgba(21,128,61,.12)"/>
+                <rect x="14" y="18" width="78" height="10" rx="5" fill="rgba(11,15,20,.18)"/>
+                <rect x="14" y="34" width="92" height="8" rx="4" fill="rgba(11,15,20,.12)"/>
+                <rect x="14" y="46" width="70" height="8" rx="4" fill="rgba(11,15,20,.10)"/>
+                <circle cx="102" cy="20" r="6" fill="rgba(239,68,68,.45)"/>
+              </svg>
+            </div>
+            <div>
+              <p class="news-title">Jadwal Seminar Riset Terbuka: Metode & Replikasi</p>
+              <div class="meta"><span>Research</span><span>•</span><span>Kemarin</span></div>
+            </div>
+          </div>
+
+          <div class="news-item">
+            <div class="thumb" aria-hidden="true">
+              <svg viewBox="0 0 120 72" width="100%" height="100%">
+                <rect x="8" y="10" width="104" height="52" rx="10" fill="rgba(2,6,23,.06)"/>
+                <rect x="14" y="18" width="56" height="10" rx="5" fill="rgba(11,15,20,.18)"/>
+                <rect x="14" y="34" width="92" height="8" rx="4" fill="rgba(11,15,20,.12)"/>
+                <rect x="14" y="46" width="82" height="8" rx="4" fill="rgba(11,15,20,.10)"/>
+                <rect x="86" y="18" width="20" height="10" rx="5" fill="rgba(185,28,28,.35)"/>
+              </svg>
+            </div>
+            <div>
+              <p class="news-title">Panduan Layanan Akademik: Perwalian, KRS, dan Arsip Nilai</p>
+              <div class="meta"><span>Academics</span><span>•</span><span>3 hari lalu</span></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card" id="announcements">
+          <div class="chead">
+            <h3>Pengumuman</h3>
+            <span class="mini-tag">Info</span>
+          </div>
+          <div class="cbody">
+            <p class="small muted"><strong>Catatan:</strong> Conten contoh. Ganti sesuai kebutuhan kampus/organisasi.</p>
+
+            <table aria-label="Pengumuman akademik">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>Topik</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12 Feb</td>
+                  <td>Penyesuaian jadwal perkuliahan (kelas gabungan)</td>
+                  <td><strong style="color:var(--red)">Penting</strong></td>
+                </tr>
+                <tr>
+                  <td>16 Feb</td>
+                  <td>Pembukaan pendaftaran beasiswa internal</td>
+                  <td><strong style="color:var(--green)">Dibuka</strong></td>
+                </tr>
+                <tr>
+                  <td>20 Feb</td>
+                  <td>Workshop penulisan ilmiah untuk mahasiswa</td>
+                  <td><strong>Terjadwal</strong></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="cta-row" style="margin-top:12px">
+              <a class="btn primary" href="#contact">Hubungi Admin</a>
+              <a class="btn" href="#students">Layanan Mahasiswa</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academics / Admissions / Research -->
+  <section id="academics">
+    <div class="container">
+      <div class="grid-3">
+        <div class="card">
+          <div class="chead"><h3>Akademik</h3><span class="mini-tag">Programs</span></div>
+          <div class="cbody">
+            <p class="small muted">
+              Program studi dirancang untuk penguasaan dasar yang kuat dan keterampilan praktis.
+              Fokus pada kurikulum terstruktur, proyek, dan evaluasi berkelanjutan.
+            </p>
+            <ul class="small muted" style="margin:10px 0 0; padding-left:18px;">
+              <li>Rencana Studi & Kalender Akademik</li>
+              <li>Perwalian & Administrasi KRS</li>
+              <li>Pedoman Tugas Akhir</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" id="admissions">
+          <div class="chead"><h3>Penerimaan</h3><span class="mini-tag">Apply</span></div>
+          <div class="cbody">
+            <p class="small muted">
+              Jalur pendaftaran: reguler, beasiswa, dan transfer. Siapkan berkas, pilih program,
+              lalu ikuti jadwal seleksi.
+            </p>
+            <div class="cta-row" style="margin-top:10px">
+              <a class="btn primary" href="#contact">Konsultasi</a>
+              <a class="btn" href="#announcements">Lihat Jadwal</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="research">
+          <div class="chead"><h3>Riset</h3><span class="mini-tag">Labs</span></div>
+          <div class="cbody">
+            <p class="small muted">
+              Pusat riset mendukung publikasi, replikasi, dan kolaborasi lintas disiplin.
+              Prioritas pada transparansi metode dan dokumentasi.
+            </p>
+            <ul class="small muted" style="margin:10px 0 0; padding-left:18px;">
+              <li>Seminar mingguan & open lab</li>
+              <li>Repositori proyek & dataset internal</li>
+              <li>Kolaborasi industri dan komunitas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Students -->
+  <section id="students">
+    <div class="container">
+      <div class="card">
+        <div class="chead">
+          <h3>Layanan Mahasiswa</h3>
+          <span class="mini-tag">Support</span>
+        </div>
+        <div class="cbody">
+          <div class="grid-3">
+            <div>
+              <p class="news-title" style="margin:0 0 6px">Pusat Karier</p>
+              <p class="small muted">Info magang, CV review, dan jadwal rekrutmen kampus.</p>
+            </div>
+            <div>
+              <p class="news-title" style="margin:0 0 6px">Bimbingan Akademik</p>
+              <p class="small muted">Konsultasi rencana studi, perwalian, dan strategi belajar.</p>
+            </div>
+            <div>
+              <p class="news-title" style="margin:0 0 6px">Kegiatan & Organisasi</p>
+              <p class="small muted">Agenda UKM, komunitas riset, dan event kampus.</p>
+            </div>
+          </div>
+
+          <blockquote style="margin-top:12px; border-left:5px solid var(--green); background:rgba(34,197,94,.08);">
+            <p style="margin:0; font-weight:1000; font-family:var(--serif);">
+              “Portal yang baik membuat informasi mudah ditemukan, bukan sekadar terlihat.”
+            </p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="card">
+        <div class="chead">
+          <h3>Kontak</h3>
+          <span class="mini-tag">Help</span>
+        </div>
+        <div class="cbody">
+          <div class="grid-3">
+            <div>
+              <p class="news-title" style="margin:0 0 6px">Email</p>
+              <p class="small muted">help@scriblerian.net</p>
+            </div>
+            <div>
+              <p class="news-title" style="margin:0 0 6px">Telepon</p>
+              <p class="small muted">+62 000-0000</p>
+            </div>
+            <div>
+              <p class="news-title" style="margin:0 0 6px">Alamat</p>
+              <p class="small muted">Scriblerian Campus, Main Avenue (contoh)</p>
+            </div>
+          </div>
+
+          <div class="cta-row" style="margin-top:12px">
+            <a class="btn primary" href="#news">Kembali ke Berita</a>
+            <a class="btn" href="#academics">Lihat Akademik</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<ul class="ref-links">
+  <li><a href="https://datahklotto.us/" target="_blank" rel="noopener">Data HK Lotto</a></li>
+  <li><a href="http://178.128.52.7/" target="_blank" rel="noopener">Data SDY Lotto</a></li>
+  <li><a href="https://pafiairseruk.org/" target="_blank" rel="noopener">Data HK</a></li>
+  <li><a href="http://178.128.89.94/" target="_blank" rel="noopener">Data SGP</a></li>
+  <li><a href="https://pafitanglad.org/" target="_blank" rel="noopener">Data SDY</a></li>
+  <li><a href="https://lamarsalaplayadegandia.com/" target="_blank" rel="noopener">Data HK</a></li>
+  <li><a href="http://159.223.35.146/" target="_blank" rel="noopener">Data SDY Lotto</a></li>
+  <li><a href="https://wholesalejerseys4sale.com/" target="_blank" rel="noopener">Prediksi Keluaran</a></li>
+  <li><a href="https://pafibenermeriahkabupaten.org/" target="_blank" rel="noopener">Prediksi Jitu</a></li>
+  <li><a href="http://178.128.116.128/" target="_blank" rel="noopener">Prediksi SDY</a></li>
+  <li><a href="https://prediksihkpools.net/" target="_blank" rel="noopener">Prediksi HK</a></li>
+  <li><a href="http://178.128.215.158/" target="_blank" rel="noopener">Angkanet</a></li>
+  <li><a href="http://178.128.21.45/" target="_blank" rel="noopener">Angkanet Result</a></li>
+  <li><a href="https://pafipcgunungkidulkab.org/" target="_blank" rel="noopener">Data HK 6D</a></li>
+</ul>
+
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div>
+          <h4>Scriblerian University</h4>
+          <p>
+            Portal informasi kampus (template). Ganti konten sesuai kebutuhan organisasi.
+            Warna utama: putih–hitam dengan aksen merah–hijau gradient untuk highlight.
+          </p>
+        </div>
+        <div>
+          <h4>Tautan Cepat</h4>
+          <p><a href="#announcements">Pengumuman</a> • <a href="#admissions">Penerimaan</a> • <a href="#research">Riset</a> • <a href="#students">Mahasiswa</a></p>
+        </div>
+      </div>
+      <div class="copyright">© 2026 scriblerian.net — All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>
